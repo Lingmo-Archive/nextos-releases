@@ -21,7 +21,7 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/$REPO/actions/runs \
-          | jq '.workflow_runs | map(select(.status == "completed")) | first | .id')
+          | jq '.workflow_runs | map(select(.status == "completed" and .conclusion == "success")) | first | .id')
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
       
     - name: Download Artifact
